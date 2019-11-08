@@ -24,7 +24,8 @@
         <TextView
             android:id="@+id/tvControlTitle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:gravity="center"/>
         <TextView
             android:id="@+id/tvTime"
             android:layout_width="match_parent"
