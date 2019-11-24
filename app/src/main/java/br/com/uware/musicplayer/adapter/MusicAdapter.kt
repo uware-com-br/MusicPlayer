@@ -5,12 +5,15 @@ import android.graphics.Color
 import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import br.com.uware.musicplayer.R
 import kotlinx.android.synthetic.main.content_musicas.view.*
+import java.lang.Exception
 import java.text.SimpleDateFormat
 
 class MusicAdapter (musicList: ArrayList<Uri>,
@@ -29,17 +32,23 @@ class MusicAdapter (musicList: ArrayList<Uri>,
     }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val music = musicList[position]
-        var mmr = MediaMetadataRetriever()
-        mmr.setDataSource(ctx,music)
-        holder.title.text = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
-        holder.author.text = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST)
+        try {
+            var mmr = MediaMetadataRetriever()
+            mmr.setDataSource(ctx, music)
+            holder.title.text = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
+            holder.author.text = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST)
+            var mediaPlayer = MediaPlayer.create(ctx,music)
+            val sdf = SimpleDateFormat("mm:ss")
+            holder.time.text = sdf.format(mediaPlayer!!.duration).toString()
+            mediaPlayer.release()
+        }catch (e: Exception){
+            Log.d("Music title and artist: ", e.toString())
+            holder.title.text = music.toString()
+            Toast.makeText(ctx, "Erro na metadata da música.", Toast.LENGTH_SHORT).show()
+        }
         holder.lay.setOnClickListener {
             callback(music,position)
         }
-        var mediaPlayer = MediaPlayer.create(ctx,music)
-        val sdf = SimpleDateFormat("mm:ss")
-        holder.time.text = sdf.format(mediaPlayer!!.duration).toString()
-        mediaPlayer.release()
 
         if(position == callbackMusic()){
             holder.lay.setBackgroundResource(R.drawable.background_item_list_active)

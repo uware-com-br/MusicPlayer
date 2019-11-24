@@ -23,6 +23,7 @@ import kotlin.collections.ArrayList
 import android.media.AudioManager
 import android.media.MediaMetadataRetriever
 import android.view.animation.AlphaAnimation
+import java.lang.Exception
 
 //  Autor: Rodrigo Leutz
 //  Licensa: GPL
@@ -126,7 +127,12 @@ class MainActivity : AppCompatActivity() {
     private fun playAdp(uri: Uri, pos: Int){
         clearMediaPlayer()
         currentMusic = pos
-        mediaPlayer = MediaPlayer.create(this, uri)
+        try {
+            mediaPlayer = MediaPlayer.create(this, uri)
+        }catch (e: Exception){
+            Log.d("Erro na mp3: ",e.toString())
+            Toast.makeText(this, "Erro no abrir a música.", Toast.LENGTH_SHORT)
+        }
         if(mediaPlayer != null) {
             playSong()
             initView()
