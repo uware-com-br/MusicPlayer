@@ -26,7 +26,7 @@ import android.view.animation.AlphaAnimation
 import java.lang.Exception
 
 //  Autor: Rodrigo Leutz
-//  Licensa: GPL
+//  Licença: GPL
 
 class MainActivity : AppCompatActivity() {
     var check: Boolean = false
