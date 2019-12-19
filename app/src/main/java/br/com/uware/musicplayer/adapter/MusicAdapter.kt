@@ -51,18 +51,23 @@ class MusicAdapter (musicList: ArrayList<Uri>,
         }
 
         if(position == callbackMusic()){
-            holder.lay.setBackgroundResource(R.drawable.background_item_list_active)
+            holder.lay.setBackgroundColor(ctx.getColor(R.color.colorPrimary))
             holder.author.setTextColor(Color.WHITE)
             holder.title.setTextColor(Color.YELLOW)
             holder.time.setTextColor(Color.WHITE)
         } else{
-            holder.lay.setBackgroundResource(R.drawable.background_item_list)
             holder.author.setTextColor(Color.BLACK)
             holder.title.setTextColor(Color.parseColor("#008577"))
             holder.time.setTextColor(Color.BLACK)
         }
         holder.del.setOnClickListener {
             callbackDelete(position)
+        }
+        if(position == musicList.size-1){
+            holder.border.visibility = View.INVISIBLE
+        }
+        else {
+            holder.border.visibility = View.VISIBLE
         }
     }
     override fun getItemCount(): Int {
@@ -74,5 +79,6 @@ class MusicAdapter (musicList: ArrayList<Uri>,
         var title = view.tvAdpTitle
         var time = view.tvAdpTime
         var del = view.btnAdpDel
+        var border = view.tvBorder
     }
 }

@@ -50,7 +50,6 @@ class MainActivity : AppCompatActivity() {
         initPermissions()
         showVolume()
         initVolume()
-        initView()
         openMenu()
         fabAdd.setOnClickListener {
             openMenu()
@@ -122,6 +121,11 @@ class MainActivity : AppCompatActivity() {
             override fun onStopTrackingTouch(seekBar: SeekBar) {
             }
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initView()
     }
     // Player
     private fun playAdp(uri: Uri, pos: Int){
